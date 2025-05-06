@@ -1,0 +1,145 @@
+/* Reset dasar dan margin */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo-img {
+    width: 100px;
+    height: auto;
+}
+
+/* Navigasi */
+nav {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li button {
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.primary {
+    background-color: #007BFF;
+    color: white;
+}
+
+button.primary:hover {
+    background-color: #0056b3;
+}
+
+button.cta {
+    background-color: #FF5722;
+    color: white;
+}
+
+button.cta:hover {
+    background-color: #FF3D00;
+}
+
+button.secondary {
+    background-color: #28A745;
+    color: white;
+}
+
+button.secondary:hover {
+    background-color: #218838;
+}
+
+button.admin {
+    background-color: #DC3545;
+    color: white;
+}
+
+button.admin:hover {
+    background-color: #C82333;
+}
+
+button.alkitab {
+    background-color: transparent;
+    border: 2px solid #007BFF;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+button.alkitab:hover {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #e7f3ff;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 2em;
+    color: #333;
+}
+
+/* Main Content */
+.content {
+    padding: 20px;
+    background-color: #ffffff;
+    margin-top: 20px;
+}
+
+.content h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.content ul {
+    margin-left: 20px;
+    color: #555;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
