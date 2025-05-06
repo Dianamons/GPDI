@@ -17,113 +17,82 @@
             font-family: 'Arial', sans-serif;
             background-color: #000000; /* Latar belakang hitam */
             color: #fff; /* Teks putih untuk kontras */
-        }
-
-        /* Navigasi */
-        nav {
-            position: sticky;
-            top: 0;
-            background-color: #000000; /* Latar belakang hitam untuk menu */
-            padding: 15px 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-        }
-
-        nav ul {
-            list-style: none;
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            flex-direction: row;
         }
 
-        nav ul li {
-            margin: 0;
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #007BFF; /* Biru sidebar */
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 10px;
+            align-items: center;
+            justify-content: start;
         }
 
-        nav ul li button {
+        .sidebar img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 30px;
+        }
+
+        .sidebar button {
             font-size: 14px;
-            padding: 10px 20px;
-            border: 2px solid #007BFF; /* Tombol dibalut dengan warna biru */
-            border-radius: 25px; /* rounded edges */
+            padding: 12px 20px;
+            border: 2px solid #fff;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
             text-transform: uppercase;
             background-color: transparent;
-            color: #007BFF;
+            color: white;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px; /* Memberi ruang antara logo dan teks */
-            max-width: 180px; /* Membatasi ukuran tombol */
+            gap: 8px;
+            width: 200px;
         }
 
-        nav ul li button img {
+        .sidebar button img {
             width: 20px;
             height: 20px;
             object-fit: contain;
         }
 
-        button:hover {
-            background-color: #007BFF;
+        .sidebar button:hover {
+            background-color: #0056b3;
             color: white;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
         }
 
-        /* Tombol CTA (Call to Action) */
-        button.cta {
-            background: linear-gradient(135deg, #FF5722, #FF8A00);
-            color: white;
-            border: 2px solid transparent;
+        /* Konten Utama */
+        .main-content {
+            margin-left: 250px;
+            width: 100%;
+            padding: 20px;
         }
 
-        button.cta:hover {
-            background: linear-gradient(135deg, #e64a19, #f57c00);
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
-        }
-
-        /* Hero Section */
         .hero {
-            background-color: #007BFF; /* Biru muda untuk latar belakang hero */
+            background-color: #007BFF;
             padding: 50px 20px;
             text-align: center;
-            border-bottom: 5px solid #0056b3;
+            color: white;
         }
 
         .hero h2 {
             font-size: 2.5em;
-            color: white;
         }
 
         .hero p {
             font-size: 1.2em;
-            color: white;
-        }
-
-        /* Main Content */
-        .content {
-            padding: 20px;
-            background-color: #e7f3ff; /* Biru muda untuk background konten */
-            margin-top: 20px;
-            border-radius: 10px; /* Sudut melengkung */
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-        }
-
-        .content h3 {
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .content ul {
-            margin-left: 20px;
-            color: #555;
-        }
-
-        .content ul li {
-            margin: 5px 0;
         }
 
         /* Footer */
@@ -137,13 +106,16 @@
 
         /* Responsif untuk perangkat mobile */
         @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column; /* Tombol ditata secara vertikal */
-                gap: 10px;
+            .sidebar {
+                width: 200px;
             }
 
-            .hero {
-                padding: 30px 15px;
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar button {
+                width: 180px;
             }
 
             .hero h2 {
@@ -154,10 +126,6 @@
                 font-size: 1em;
             }
 
-            .content {
-                padding: 15px;
-            }
-
             footer {
                 padding: 15px;
             }
@@ -166,27 +134,27 @@
 </head>
 <body>
 
-    <!-- Navigasi -->
-    <nav>
-        <ul>
-            <li><button class="primary"><img src="path/to/logo-home.png" alt="Home"> Home</button></li>
-            <li><button class="alkitab"><img src="path/to/logo-alkitab.png" alt="Alkitab"> Alkitab</button></li>
-            <li><button class="secondary"><img src="path/to/logo-jadwal.png" alt="Jadwal Kebaktian"> Jadwal Kebaktian</button></li>
-            <li><button class="secondary"><img src="path/to/logo-pengumuman.png" alt="Pengumuman"> Pengumuman</button></li>
-            <li><button class="secondary"><img src="path/to/logo-galeri.png" alt="Galeri"> Galeri</button></li>
-            <li><button class="cta"><img src="path/to/logo-donasi.png" alt="Donasi"> Donasi</button></li>
-            <li><button class="admin"><img src="path/to/logo-admin.png" alt="Admin Panel"> Admin Panel</button></li>
-        </ul>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <h2>Selamat Datang di Gereja XYZ</h2>
-        <p>Tempat bersekutu dan tumbuh dalam iman bersama.</p>
-    </section>
+    <!-- Sidebar Navigasi -->
+    <div class="sidebar">
+        <img src="path/to/logo-sekolah.png" alt="Logo Gereja">
+        <button><img src="path/to/logo-home.png" alt="Home"> Home</button>
+        <button><img src="path/to/logo-alkitab.png" alt="Alkitab"> Alkitab</button>
+        <button><img src="path/to/logo-jadwal.png" alt="Jadwal Kebaktian"> Jadwal Kebaktian</button>
+        <button><img src="path/to/logo-pengumuman.png" alt="Pengumuman"> Pengumuman</button>
+        <button><img src="path/to/logo-galeri.png" alt="Galeri"> Galeri</button>
+        <button><img src="path/to/logo-donasi.png" alt="Donasi"> Donasi</button>
+        <button><img src="path/to/logo-admin.png" alt="Admin Panel"> Admin Panel</button>
+    </div>
 
     <!-- Main Content -->
-    <main>
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2>Selamat Datang di Gereja XYZ</h2>
+            <p>Tempat bersekutu dan tumbuh dalam iman bersama.</p>
+        </section>
+
+        <!-- Konten -->
         <section class="content">
             <h3>Pengumuman Terbaru</h3>
             <p>Jadwal kebaktian terbaru: Minggu, 10:00 WIB di Gereja XYZ.</p>
@@ -198,7 +166,7 @@
                 <li>Rabu, 19:00 WIB - Kegiatan Pemuda</li>
             </ul>
         </section>
-    </main>
+    </div>
 
     <!-- Footer -->
     <footer>
