@@ -1,174 +1,137 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Gereja</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            background-color: #111;
-            color: #fff;
-        }
-
-        .sidebar {
-            width: 220px;
-            background-color: #333;
-            padding: 20px;
-            position: fixed;
-            height: 100%;
-            top: 0;
-        }
-
-        .sidebar .logo {
-            text-align: center;
-        }
-
-        .sidebar img {
-            width: 100px;
-            height: auto;
-        }
-
-        .sidebar h1 {
-            font-size: 24px;
-            margin-top: 10px;
-        }
-
-        .nav-buttons {
-            margin-top: 30px;
-        }
-
-        .nav-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #0066cc;
-            border: none;
-            color: white;
-            margin: 10px 0;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .nav-btn:hover {
-            background-color: #004d99;
-        }
-
-        .main-content {
-            margin-left: 240px;
-            padding: 20px;
-            width: 100%;
-        }
-
-        .feature {
-            display: none;
-        }
-
-        .feature.active {
-            display: block;
-        }
-
-        #alkitab-content {
-            margin-top: 20px;
-            background-color: #f0f0f0;
-            color: #111;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Gereja</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      background-color: black;
+      color: white;
+    }
+    .sidebar {
+      width: 80px;
+      background-color: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+    }
+    .sidebar button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      width: 50px;
+      height: 50px;
+    }
+    .main-content {
+      margin-left: 90px;
+      padding: 20px;
+      width: 100%;
+    }
+    .logo {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .fitur-box {
+      background-color: #d0e7ff;
+      color: black;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+  </style>
 </head>
-<body>
-    <!-- Sidebar Kiri -->
-    <div class="sidebar">
-        <div class="logo">
-            <img src="logo_gereja.png" alt="Logo Gereja">
-            <h1>Nama Gereja</h1>
-        </div>
-        <div class="nav-buttons">
-            <button onclick="showFeature('alkitab')" class="nav-btn">Alkitab</button>
-            <button onclick="showFeature('admin')" class="nav-btn">Admin</button>
-            <button onclick="showFeature('pengumuman')" class="nav-btn">Pengumuman</button>
-            <button onclick="showFeature('galeri')" class="nav-btn">Galeri</button>
-            <button onclick="showFeature('donasi')" class="nav-btn">Donasi</button>
-            <button onclick="showFeature('kontak')" class="nav-btn">Kontak</button>
-        </div>
-    </div>
+<body>  <div class="sidebar">
+    <button onclick="showFitur('alkitab')">A</button>
+    <button onclick="showFitur('admin')">Ad</button>
+    <button onclick="showFitur('pengumuman')">Pg</button>
+    <button onclick="showFitur('galeri')">Gl</button>
+    <button onclick="showFitur('donasi')">Dn</button>
+    <button onclick="showFitur('kontak')">Kt</button>
+  </div>  <div class="main-content">
+    <div class="logo">
+      <h2>GEREJA KASIH TUHAN</h2>
+    </div><!-- Fitur Alkitab -->
+<div id="alkitab" class="fitur-box" style="display:none;">
+  <h3>Alkitab Online</h3>
+  <input type="text" id="verseInput" placeholder="Contoh: John3:16" style="padding: 8px; width: 70%;">
+  <button onclick="searchVerse()" style="padding: 8px; background-color: #007BFF; color: white; border: none;">Cari</button>
+  <div id="alkitab-content" style="background-color: #d0e7ff; color: black; padding: 15px; border-radius: 10px; display: none; margin-top: 10px;"></div>
+</div>
 
-    <!-- Konten Utama -->
-    <div class="main-content">
-        <div id="alkitab" class="feature">
-            <h2>Alkitab Online</h2>
-            <div id="alkitab-content"></div>
-        </div>
-        <div id="admin" class="feature">
-            <h2>Panel Admin</h2>
-            <p>Fitur admin seperti menambah pengumuman, jadwal, dsb.</p>
-        </div>
-        <div id="pengumuman" class="feature">
-            <h2>Pengumuman Gereja</h2>
-            <p>Pengumuman gereja akan tampil di sini.</p>
-        </div>
-        <div id="galeri" class="feature">
-            <h2>Galeri Foto & Video</h2>
-            <p>Galeri kegiatan gereja ditampilkan di sini.</p>
-        </div>
-        <div id="donasi" class="feature">
-            <h2>Donasi Online</h2>
-            <p>Sistem donasi gereja online.</p>
-        </div>
-        <div id="kontak" class="feature">
-            <h2>Kontak & Lokasi</h2>
-            <p>Alamat gereja, nomor telepon, dan peta lokasi.</p>
-        </div>
-    </div>
+<!-- Fitur Admin -->
+<div id="admin" class="fitur-box" style="display:none;">
+  <h3>Panel Admin</h3>
+  <ul>
+    <li>Kelola Pengumuman</li>
+    <li>Kelola Jadwal Kebaktian</li>
+    <li>Kelola Galeri</li>
+  </ul>
+</div>
 
-    <script>
-        // Fungsi untuk menampilkan fitur yang dipilih
-        function showFeature(feature) {
-            // Sembunyikan semua fitur
-            const features = document.querySelectorAll('.feature');
-            features.forEach(f => f.classList.remove('active'));
+<!-- Fitur Pengumuman -->
+<div id="pengumuman" class="fitur-box" style="display:none;">
+  <h3>Pengumuman Gereja</h3>
+  <p>Contoh: Ibadah Pemuda hari Sabtu jam 18:00.</p>
+</div>
 
-            // Tampilkan fitur yang dipilih
-            const activeFeature = document.getElementById(feature);
-            if (activeFeature) {
-                activeFeature.classList.add('active');
-            }
+<!-- Fitur Galeri -->
+<div id="galeri" class="fitur-box" style="display:none;">
+  <h3>Galeri Kegiatan</h3>
+  <p>Masukkan URL gambar atau video dari Imgur:</p>
+  <input type="text" placeholder="URL Gambar/Video" style="width:100%; padding:8px;">
+</div>
 
-            // Jika memilih Alkitab, muat teks Alkitab
-            if (feature === 'alkitab') {
-                fetchBibleVerse('John3:16');
-            }
-        }
+<!-- Fitur Donasi -->
+<div id="donasi" class="fitur-box" style="display:none;">
+  <h3>Donasi Online</h3>
+  <p>Scan QR atau transfer ke rekening gereja.</p>
+</div>
 
-        // Fungsi untuk memuat ayat dari API Alkitab
-        function fetchBibleVerse(reference) {
-            const apiKey = '78216462929368cfdee3020a0529305b';  // Gantilah dengan API Key yang sesuai
-            const url = `https://api.scripture.api.bible/v1/bibles/1b17e7f14f823862-01/verses/${reference}`;
+<!-- Fitur Kontak -->
+<div id="kontak" class="fitur-box" style="display:none;">
+  <h3>Kontak & Lokasi</h3>
+  <p>Alamat: Jl. Damai No. 10, Kota Sejahtera</p>
+  <p>Telp: 0812-3456-7890</p>
+</div>
 
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'api-key': apiKey
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                const verseText = data.data.content;
-                document.getElementById('alkitab-content').innerText = verseText;
-            })
-            .catch(error => console.error('Error fetching Bible verse:', error));
-        }
+  </div>  <script>
+    function showFitur(id) {
+      const fitur = ['alkitab', 'admin', 'pengumuman', 'galeri', 'donasi', 'kontak'];
+      fitur.forEach(f => {
+        document.getElementById(f).style.display = (f === id) ? 'block' : 'none';
+      });
+    }
 
-        // Menampilkan Alkitab pertama kali
-        showFeature('alkitab');
-    </script>
-</body>
+    function searchVerse() {
+      const reference = document.getElementById('verseInput').value.trim();
+      const apiKey = '78216462929368cfdee3020a0529305b';
+      const bibleId = 'de4e12af7f28f599-02';
+      const url = `https://api.scripture.api.bible/v1/bibles/${bibleId}/verses/${reference}`;
+
+      fetch(url, {
+        headers: { 'api-key': apiKey }
+      })
+      .then(response => response.json())
+      .then(data => {
+        const verse = data.data?.content || 'Ayat tidak ditemukan.';
+        document.getElementById('alkitab-content').innerHTML = verse;
+        document.getElementById('alkitab-content').style.display = 'block';
+      })
+      .catch(() => {
+        document.getElementById('alkitab-content').innerHTML = 'Gagal mengambil ayat.';
+        document.getElementById('alkitab-content').style.display = 'block';
+      });
+    }
+  </script></body>
 </html>
