@@ -36,7 +36,7 @@
     .main-content {
       margin-left: 90px;
       padding: 20px;
-      width: 100%;
+      width: calc(100% - 100px);
     }
     .logo {
       text-align: center;
@@ -48,6 +48,13 @@
       padding: 15px;
       border-radius: 10px;
       margin-bottom: 15px;
+    }
+    input, textarea, button {
+      margin-top: 5px;
+      margin-bottom: 10px;
+      padding: 8px;
+      width: 100%;
+      box-sizing: border-box;
     }
   </style>
 </head>
@@ -61,44 +68,44 @@
   </div>  <div class="main-content">
     <div class="logo">
       <h2>GEREJA KASIH TUHAN</h2>
-    </div><!-- Fitur Alkitab -->
-<div id="alkitab" class="fitur-box" style="display:none;">
+    </div><div id="alkitab" class="fitur-box" style="display:none;">
   <h3>Alkitab Online</h3>
-  <input type="text" id="verseInput" placeholder="Contoh: John3:16" style="padding: 8px; width: 70%;">
-  <button onclick="searchVerse()" style="padding: 8px; background-color: #007BFF; color: white; border: none;">Cari</button>
-  <div id="alkitab-content" style="background-color: #d0e7ff; color: black; padding: 15px; border-radius: 10px; display: none; margin-top: 10px;"></div>
+  <input type="text" id="verseInput" placeholder="Contoh: John3:16">
+  <button onclick="searchVerse()">Cari</button>
+  <div id="alkitab-content" style="background-color: #d0e7ff; color: black; padding: 15px; border-radius: 10px; display: none;"></div>
 </div>
 
-<!-- Fitur Admin -->
 <div id="admin" class="fitur-box" style="display:none;">
   <h3>Panel Admin</h3>
-  <ul>
-    <li>Kelola Pengumuman</li>
-    <li>Kelola Jadwal Kebaktian</li>
-    <li>Kelola Galeri</li>
-  </ul>
+  <h4>Tambah Pengumuman</h4>
+  <input type="text" id="judulPengumuman" placeholder="Judul Pengumuman">
+  <textarea id="isiPengumuman" placeholder="Isi Pengumuman"></textarea>
+  <button onclick="tambahPengumuman()">Simpan Pengumuman</button>
+
+  <h4>Jadwal Kebaktian</h4>
+  <input type="text" id="jadwalKegiatan" placeholder="Contoh: Minggu 10.00 - Ibadah Umum">
+  <button onclick="tambahJadwal()">Simpan Jadwal</button>
+
+  <h4>Galeri</h4>
+  <input type="text" id="urlGaleri" placeholder="URL Gambar/Video">
+  <button onclick="tambahGaleri()">Tambah ke Galeri</button>
 </div>
 
-<!-- Fitur Pengumuman -->
 <div id="pengumuman" class="fitur-box" style="display:none;">
   <h3>Pengumuman Gereja</h3>
-  <p>Contoh: Ibadah Pemuda hari Sabtu jam 18:00.</p>
+  <ul id="daftarPengumuman"></ul>
 </div>
 
-<!-- Fitur Galeri -->
 <div id="galeri" class="fitur-box" style="display:none;">
   <h3>Galeri Kegiatan</h3>
-  <p>Masukkan URL gambar atau video dari Imgur:</p>
-  <input type="text" placeholder="URL Gambar/Video" style="width:100%; padding:8px;">
+  <div id="galeriContent"></div>
 </div>
 
-<!-- Fitur Donasi -->
 <div id="donasi" class="fitur-box" style="display:none;">
   <h3>Donasi Online</h3>
   <p>Scan QR atau transfer ke rekening gereja.</p>
 </div>
 
-<!-- Fitur Kontak -->
 <div id="kontak" class="fitur-box" style="display:none;">
   <h3>Kontak & Lokasi</h3>
   <p>Alamat: Jl. Damai No. 10, Kota Sejahtera</p>
@@ -117,21 +124,45 @@
       const reference = document.getElementById('verseInput').value.trim();
       const apiKey = '78216462929368cfdee3020a0529305b';
       const bibleId = 'de4e12af7f28f599-02';
-      const url = `https://api.scripture.api.bible/v1/bibles/${bibleId}/verses/${reference}`;
+      const url = `https://api.scripture.api.bible/v1/bibles/${bibleId}/search?query=${reference}`;
 
       fetch(url, {
         headers: { 'api-key': apiKey }
       })
       .then(response => response.json())
       .then(data => {
-        const verse = data.data?.content || 'Ayat tidak ditemukan.';
-        document.getElementById('alkitab-content').innerHTML = verse;
+        const verses = data.data.verses || [];
+        let hasil = verses.map(v => `<p><strong>${v.reference}</strong>: ${v.text}</p>`).join('');
+        document.getElementById('alkitab-content').innerHTML = hasil || 'Ayat tidak ditemukan.';
         document.getElementById('alkitab-content').style.display = 'block';
       })
       .catch(() => {
         document.getElementById('alkitab-content').innerHTML = 'Gagal mengambil ayat.';
         document.getElementById('alkitab-content').style.display = 'block';
       });
+    }
+
+    function tambahPengumuman() {
+      const judul = document.getElementById('judulPengumuman').value;
+      const isi = document.getElementById('isiPengumuman').value;
+      const list = document.getElementById('daftarPengumuman');
+      const item = document.createElement('li');
+      item.innerHTML = `<strong>${judul}</strong>: ${isi}`;
+      list.appendChild(item);
+    }
+
+    function tambahJadwal() {
+      alert('Jadwal berhasil disimpan (simulasi)');
+    }
+
+    function tambahGaleri() {
+      const url = document.getElementById('urlGaleri').value;
+      const container = document.getElementById('galeriContent');
+      const img = document.createElement('img');
+      img.src = url;
+      img.style.maxWidth = '100%';
+      img.style.marginBottom = '10px';
+      container.appendChild(img);
     }
   </script></body>
 </html>
