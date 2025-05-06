@@ -1,168 +1,199 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Website Gereja</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/lucide.css">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
   <style>
     body {
       margin: 0;
       font-family: sans-serif;
-      display: flex;
-      background-color: black;
+      background: black;
       color: white;
     }
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #1e3a8a;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
     .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
       width: 80px;
-      background-color: #111;
+      background: black;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-top: 20px;
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
+      z-index: 999;
     }
-    .sidebar button {
-      background-color: #007BFF;
-      color: white;
+    .menu-btn {
+      background: #1e3a8a;
       border: none;
+      color: white;
+      width: 60px;
+      height: 60px;
       margin: 10px 0;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-btn i {
+      width: 24px;
+      height: 24px;
+    }
+    .content {
+      margin-left: 90px;
+      padding: 15px;
+    }
+    .section {
+      display: none;
+      background: #3b82f6;
       padding: 10px;
       border-radius: 10px;
-      width: 50px;
-      height: 50px;
+      margin-bottom: 20px;
     }
-    .main-content {
-      margin-left: 90px;
-      padding: 20px;
-      width: calc(100% - 100px);
-    }
-    .logo {
-      text-align: center;
+    .input-box {
       margin-top: 10px;
     }
-    .fitur-box {
-      background-color: #d0e7ff;
-      color: black;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-    input, textarea, button {
-      margin-top: 5px;
-      margin-bottom: 10px;
-      padding: 8px;
+    input, textarea {
       width: 100%;
-      box-sizing: border-box;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 10px;
+    }
+    button.submit {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
     }
   </style>
 </head>
-<body>  <div class="sidebar">
-    <button onclick="showFitur('alkitab')">A</button>
-    <button onclick="showFitur('admin')">Ad</button>
-    <button onclick="showFitur('pengumuman')">Pg</button>
-    <button onclick="showFitur('galeri')">Gl</button>
-    <button onclick="showFitur('donasi')">Dn</button>
-    <button onclick="showFitur('kontak')">Kt</button>
-  </div>  <div class="main-content">
-    <div class="logo">
-      <h2>GEREJA KASIH TUHAN</h2>
-    </div><div id="alkitab" class="fitur-box" style="display:none;">
-  <h3>Alkitab Online</h3>
-  <input type="text" id="verseInput" placeholder="Contoh: John3:16">
-  <button onclick="searchVerse()">Cari</button>
-  <div id="alkitab-content" style="background-color: #d0e7ff; color: black; padding: 15px; border-radius: 10px; display: none;"></div>
-</div>
+<body>
+  <header>
+    <div>Logo Gereja</div>
+    <div>GEREJA CONTOH ONLINE</div>
+  </header>
 
-<div id="admin" class="fitur-box" style="display:none;">
-  <h3>Panel Admin</h3>
-  <h4>Tambah Pengumuman</h4>
-  <input type="text" id="judulPengumuman" placeholder="Judul Pengumuman">
-  <textarea id="isiPengumuman" placeholder="Isi Pengumuman"></textarea>
-  <button onclick="tambahPengumuman()">Simpan Pengumuman</button>
+  <div class="sidebar">
+    <button onclick="showSection('alkitab')" class="menu-btn" title="Alkitab"><i data-lucide="book"></i></button>
+    <button onclick="showSection('admin')" class="menu-btn" title="Admin"><i data-lucide="settings"></i></button>
+    <button onclick="showSection('jadwal')" class="menu-btn" title="Jadwal"><i data-lucide="calendar-days"></i></button>
+    <button onclick="showSection('pengumuman')" class="menu-btn" title="Pengumuman"><i data-lucide="megaphone"></i></button>
+    <button onclick="showSection('galeri')" class="menu-btn" title="Galeri"><i data-lucide="image"></i></button>
+    <button onclick="showSection('kontak')" class="menu-btn" title="Kontak"><i data-lucide="map-pin"></i></button>
+  </div>
 
-  <h4>Jadwal Kebaktian</h4>
-  <input type="text" id="jadwalKegiatan" placeholder="Contoh: Minggu 10.00 - Ibadah Umum">
-  <button onclick="tambahJadwal()">Simpan Jadwal</button>
+  <div class="content">
+    <div id="alkitab" class="section">
+      <h3>Alkitab</h3>
+      <input id="cariAyat" placeholder="Contoh: Yohanes 3:16">
+      <button class="submit" onclick="cariAlkitab()">Cari</button>
+      <div id="hasilAyat"></div>
+    </div>
 
-  <h4>Galeri</h4>
-  <input type="text" id="urlGaleri" placeholder="URL Gambar/Video">
-  <button onclick="tambahGaleri()">Tambah ke Galeri</button>
-</div>
+    <div id="admin" class="section">
+      <h3>Panel Admin</h3>
+      <h4>Tambah Pengumuman</h4>
+      <input id="judulPengumuman" placeholder="Judul">
+      <textarea id="isiPengumuman" placeholder="Isi..."></textarea>
+      <button class="submit" onclick="tambahPengumuman()">Simpan</button>
 
-<div id="pengumuman" class="fitur-box" style="display:none;">
-  <h3>Pengumuman Gereja</h3>
-  <ul id="daftarPengumuman"></ul>
-</div>
+      <h4>Tambah Foto / Video Galeri</h4>
+      <input id="urlGaleri" placeholder="URL Gambar/Video dari Imgur">
+      <button class="submit" onclick="tambahGaleri()">Simpan</button>
+    </div>
 
-<div id="galeri" class="fitur-box" style="display:none;">
-  <h3>Galeri Kegiatan</h3>
-  <div id="galeriContent"></div>
-</div>
+    <div id="jadwal" class="section">
+      <h3>Jadwal Ibadah</h3>
+      <ul>
+        <li>Minggu, 09.00 WIB - Ibadah Umum</li>
+        <li>Rabu, 19.00 WIB - Doa Malam</li>
+      </ul>
+    </div>
 
-<div id="donasi" class="fitur-box" style="display:none;">
-  <h3>Donasi Online</h3>
-  <p>Scan QR atau transfer ke rekening gereja.</p>
-</div>
+    <div id="pengumuman" class="section">
+      <h3>Pengumuman Gereja</h3>
+      <div id="listPengumuman"></div>
+    </div>
 
-<div id="kontak" class="fitur-box" style="display:none;">
-  <h3>Kontak & Lokasi</h3>
-  <p>Alamat: Jl. Damai No. 10, Kota Sejahtera</p>
-  <p>Telp: 0812-3456-7890</p>
-</div>
+    <div id="galeri" class="section">
+      <h3>Galeri</h3>
+      <div id="listGaleri"></div>
+    </div>
 
-  </div>  <script>
-    function showFitur(id) {
-      const fitur = ['alkitab', 'admin', 'pengumuman', 'galeri', 'donasi', 'kontak'];
-      fitur.forEach(f => {
-        document.getElementById(f).style.display = (f === id) ? 'block' : 'none';
-      });
-    }
+    <div id="kontak" class="section">
+      <h3>Kontak & Lokasi</h3>
+      <p>Alamat: Jl. Contoh Gereja No.1</p>
+      <p>Telp: 0812-3456-7890</p>
+      <p>Email: gereja@example.com</p>
+    </div>
+  </div>
 
-    function searchVerse() {
-      const reference = document.getElementById('verseInput').value.trim();
-      const apiKey = '78216462929368cfdee3020a0529305b';
-      const bibleId = 'de4e12af7f28f599-02';
-      const url = `https://api.scripture.api.bible/v1/bibles/${bibleId}/search?query=${reference}`;
+  <script>
+    lucide.createIcons();
 
-      fetch(url, {
-        headers: { 'api-key': apiKey }
-      })
-      .then(response => response.json())
-      .then(data => {
-        const verses = data.data.verses || [];
-        let hasil = verses.map(v => `<p><strong>${v.reference}</strong>: ${v.text}</p>`).join('');
-        document.getElementById('alkitab-content').innerHTML = hasil || 'Ayat tidak ditemukan.';
-        document.getElementById('alkitab-content').style.display = 'block';
-      })
-      .catch(() => {
-        document.getElementById('alkitab-content').innerHTML = 'Gagal mengambil ayat.';
-        document.getElementById('alkitab-content').style.display = 'block';
-      });
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(el => el.style.display = 'none');
+      const target = document.getElementById(id);
+      if (target) target.style.display = 'block';
     }
 
     function tambahPengumuman() {
-      const judul = document.getElementById('judulPengumuman').value;
-      const isi = document.getElementById('isiPengumuman').value;
-      const list = document.getElementById('daftarPengumuman');
-      const item = document.createElement('li');
-      item.innerHTML = `<strong>${judul}</strong>: ${isi}`;
-      list.appendChild(item);
-    }
-
-    function tambahJadwal() {
-      alert('Jadwal berhasil disimpan (simulasi)');
+      const judul = document.getElementById("judulPengumuman").value;
+      const isi = document.getElementById("isiPengumuman").value;
+      if (judul && isi) {
+        const div = document.createElement("div");
+        div.innerHTML = `<strong>${judul}</strong><p>${isi}</p><hr>`;
+        document.getElementById("listPengumuman").appendChild(div);
+        document.getElementById("judulPengumuman").value = "";
+        document.getElementById("isiPengumuman").value = "";
+        alert("Pengumuman ditambahkan.");
+      }
     }
 
     function tambahGaleri() {
-      const url = document.getElementById('urlGaleri').value;
-      const container = document.getElementById('galeriContent');
-      const img = document.createElement('img');
-      img.src = url;
-      img.style.maxWidth = '100%';
-      img.style.marginBottom = '10px';
-      container.appendChild(img);
+      const url = document.getElementById("urlGaleri").value;
+      if (url) {
+        const media = url.endsWith(".mp4") ? 
+          `<video src="${url}" controls width="100%"></video>` :
+          `<img src="${url}" width="100%">`;
+        const div = document.createElement("div");
+        div.innerHTML = media + "<hr>";
+        document.getElementById("listGaleri").appendChild(div);
+        document.getElementById("urlGaleri").value = "";
+        alert("Galeri ditambahkan.");
+      }
     }
-  </script></body>
+
+    async function cariAlkitab() {
+      const ayat = document.getElementById("cariAyat").value;
+      const hasil = document.getElementById("hasilAyat");
+      hasil.innerHTML = "Memuat...";
+      try {
+        const res = await fetch(`https://bible-api.com/${encodeURIComponent(ayat)}`);
+        const data = await res.json();
+        if (data.text) {
+          hasil.innerHTML = `<div style="background:#93c5fd;padding:10px;border-radius:10px;">${data.text} <br><small>${data.reference}</small></div>`;
+        } else {
+          hasil.innerHTML = "Ayat tidak ditemukan.";
+        }
+      } catch (e) {
+        hasil.innerHTML = "Gagal mengambil data.";
+      }
+    }
+  </script>
+</body>
 </html>
