@@ -52,6 +52,7 @@
       width: 100%;
       text-align: left;
       cursor: pointer;
+      border-radius: 5px;
     }
     .content {
       margin: 20px;
@@ -83,7 +84,12 @@
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <h3>Menu</h3>
+    <h3>Menu Navigasi</h3>
+    <button class="button" onclick="scrollToSection('pengumuman')"><i class="fas fa-bullhorn"></i> Pengumuman</button>
+    <button class="button" onclick="scrollToSection('jadwal')"><i class="fas fa-calendar-alt"></i> Jadwal Ibadah</button>
+    <button class="button" onclick="scrollToSection('galeri')"><i class="fas fa-images"></i> Galeri</button>
+    <button class="button" onclick="scrollToSection('donasi')"><i class="fas fa-hand-holding-heart"></i> Donasi</button>
+    <hr style="border-color: #444;">
     <button class="button" onclick="alert('Fitur Alkitab belum tersedia')"><i class="fas fa-book"></i> Alkitab</button>
     <button class="button" onclick="toggleAdminPanel()"><i class="fas fa-user-cog"></i> Admin</button>
   </div>
@@ -143,6 +149,17 @@
     function toggleAdminPanel() {
       const panel = document.getElementById('admin-panel');
       panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function scrollToSection(sectionClass) {
+      const section = document.querySelector(`.${sectionClass}`);
+      if (section) {
+        window.scrollTo({
+          top: section.offsetTop - 50,
+          behavior: 'smooth'
+        });
+        toggleMenu();
+      }
     }
 
     function uploadImage(event, type) {
