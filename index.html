@@ -22,38 +22,6 @@
       max-height: 80px;
       margin-bottom: 10px;
     }
-    .menu-toggle {
-      position: absolute;
-      top: 10px; left: 10px;
-      font-size: 24px;
-      cursor: pointer;
-      color: white;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0; left: -250px; /* Sidebar tersembunyi secara default */
-      width: 250px;
-      height: 100%;
-      background: #222;
-      color: white;
-      padding: 20px;
-      transition: 0.3s; /* Animasi transisi */
-      z-index: 1000;
-    }
-    .sidebar.active { left: 0; } /* Sidebar muncul saat kelas 'active' ditambahkan */
-    .sidebar h3 { margin-top: 0; }
-    .sidebar .button {
-      display: block;
-      margin: 10px 0;
-      background: #006400;
-      color: white;
-      padding: 10px;
-      border: none;
-      width: 100%;
-      text-align: left;
-      cursor: pointer;
-      border-radius: 5px;
-    }
     .content {
       margin: 20px;
     }
@@ -74,29 +42,50 @@
       margin: 5px;
       border-radius: 5px;
     }
+
+    /* Bottom Fixed Menu */
+    .bottom-menu {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #006400;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      z-index: 1000;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    }
+    .bottom-menu button {
+      background: none;
+      border: none;
+      color: white;
+      text-align: center;
+      flex-grow: 1;
+      font-size: 14px;
+      padding: 5px;
+      cursor: pointer;
+    }
+    .bottom-menu button i {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 3px;
+    }
+
+    /* Media query untuk menyesuaikan di mobile */
     @media (max-width: 600px) {
-      .sidebar { width: 100%; }
       header h1 { font-size: 20px; }
+      .bottom-menu button {
+        font-size: 14px;
+        padding: 8px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <h3>Menu Navigasi</h3>
-    <button class="button" onclick="scrollToSection('pengumuman')"><i class="fas fa-bullhorn"></i> Pengumuman</button>
-    <button class="button" onclick="scrollToSection('jadwal')"><i class="fas fa-calendar-alt"></i> Jadwal Ibadah</button>
-    <button class="button" onclick="scrollToSection('galeri')"><i class="fas fa-images"></i> Galeri</button>
-    <button class="button" onclick="scrollToSection('donasi')"><i class="fas fa-hand-holding-heart"></i> Donasi</button>
-    <hr style="border-color: #444;">
-    <button class="button" onclick="alert('Fitur Alkitab belum tersedia')"><i class="fas fa-book"></i> Alkitab</button>
-    <button class="button" onclick="toggleAdminPanel()"><i class="fas fa-user-cog"></i> Admin</button>
-  </div>
-
   <!-- Header -->
   <header>
-    <i class="fas fa-bars menu-toggle" onclick="toggleMenu()"></i>
     <img src="https://i.imgur.com/placeholder.png" alt="Logo Gereja" id="logo-gereja"/>
     <h1>GPDI SYALOM</h1>
     <p>JLN. PUTRI AYU KM 27, DESA MAMUGO, ROKAN HILIR</p>
@@ -125,6 +114,14 @@
     </div>
   </div>
 
+  <!-- Bottom Fixed Menu -->
+  <div class="bottom-menu">
+    <button onclick="scrollToSection('pengumuman')"><i class="fas fa-bullhorn"></i><br>Pengumuman</button>
+    <button onclick="scrollToSection('jadwal')"><i class="fas fa-calendar-alt"></i><br>Jadwal</button>
+    <button onclick="scrollToSection('galeri')"><i class="fas fa-images"></i><br>Galeri</button>
+    <button onclick="scrollToSection('donasi')"><i class="fas fa-hand-holding-heart"></i><br>Donasi</button>
+  </div>
+
   <!-- Admin Panel -->
   <div class="content" id="admin-panel" style="display: none;">
     <div class="section">
@@ -142,15 +139,6 @@
 
   <!-- Script -->
   <script>
-    function toggleMenu() {
-      document.getElementById('sidebar').classList.toggle('active');
-    }
-
-    function toggleAdminPanel() {
-      const panel = document.getElementById('admin-panel');
-      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-    }
-
     function scrollToSection(sectionClass) {
       const section = document.querySelector(`.${sectionClass}`);
       if (section) {
@@ -158,7 +146,6 @@
           top: section.offsetTop - 50,
           behavior: 'smooth'
         });
-        toggleMenu(); // Close sidebar when clicking menu item
       }
     }
 
