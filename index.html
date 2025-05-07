@@ -72,6 +72,42 @@
       margin-bottom: 3px;
     }
 
+    /* Admin Button - Pojok Kanan Atas */
+    .admin-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: white;
+      color: #006400;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      border: 1px solid #006400;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .admin-btn i {
+      margin-right: 5px;
+    }
+
+    /* Admin Panel */
+    .admin-panel {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 80%;
+      z-index: 1001;
+      border-radius: 10px;
+    }
+
     /* Media query untuk menyesuaikan di mobile */
     @media (max-width: 600px) {
       header h1 { font-size: 20px; }
@@ -122,23 +158,54 @@
     <button onclick="scrollToSection('donasi')"><i class="fas fa-hand-holding-heart"></i><br>Donasi</button>
   </div>
 
+  <!-- Admin Button -->
+  <div class="admin-btn" onclick="toggleAdminPanel()">
+    <i class="fas fa-user-cog"></i> Admin
+  </div>
+
   <!-- Admin Panel -->
-  <div class="content" id="admin-panel" style="display: none;">
-    <div class="section">
-      <h2>Admin Panel</h2>
-      <label>Upload Logo Gereja:
-        <input type="file" onchange="uploadImage(event, 'logo')" />
-      </label><br><br>
-      <label>Upload Galeri Kegiatan:
-        <input type="file" multiple onchange="uploadImage(event, 'galeri')" />
-      </label><br><br>
-      <textarea placeholder="Edit Pengumuman" rows="4" style="width: 100%;"></textarea><br><br>
-      <textarea placeholder="Edit Jadwal Ibadah" rows="4" style="width: 100%;"></textarea>
-    </div>
+  <div class="admin-panel" id="admin-panel">
+    <h2>Admin Panel</h2>
+    <label>Pengumuman:</label>
+    <textarea id="pengumuman-input" placeholder="Masukkan pengumuman..." rows="4" style="width: 100%;"></textarea><br><br>
+
+    <label>Jadwal Ibadah:</label>
+    <textarea id="jadwal-input" placeholder="Masukkan jadwal ibadah..." rows="4" style="width: 100%;"></textarea><br><br>
+
+    <label>Upload Logo Gereja:</label>
+    <input type="file" id="logo-input" onchange="uploadImage(event, 'logo')" /><br><br>
+
+    <label>Upload Foto Galeri:</label>
+    <input type="file" multiple id="galeri-input" onchange="uploadImage(event, 'galeri')" /><br><br>
+
+    <button onclick="saveContent()">Simpan Perubahan</button>
   </div>
 
   <!-- Script -->
   <script>
+    // Fungsi untuk menampilkan panel admin
+    function toggleAdminPanel() {
+      const panel = document.getElementById('admin-panel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Fungsi untuk menyimpan pengumuman dan jadwal
+    function saveContent() {
+      const pengumuman = document.getElementById('pengumuman-input').value;
+      const jadwal = document.getElementById('jadwal-input').value;
+
+      // Simpan pengumuman dan jadwal di localStorage
+      localStorage.setItem('pengumuman', pengumuman);
+      localStorage.setItem('jadwal', jadwal);
+
+      // Update tampilan di halaman utama
+      document.querySelector('.pengumuman p').innerText = pengumuman;
+      document.querySelector('.jadwal ul').innerHTML = jadwal;
+
+      alert("Perubahan berhasil disimpan!");
+    }
+
+    // Fungsi untuk scroll ke bagian tertentu
     function scrollToSection(sectionClass) {
       const section = document.querySelector(`.${sectionClass}`);
       if (section) {
@@ -149,9 +216,10 @@
       }
     }
 
+    // Fungsi untuk upload gambar (Logo atau Galeri)
     function uploadImage(event, type) {
       const files = event.target.files;
-      const clientId = 'f15b5e7a0f3592b';
+      const clientId = 'f15b5e7a0f3592b'; // Client ID Imgur
 
       for (let file of files) {
         const formData = new FormData();
