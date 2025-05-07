@@ -17,10 +17,22 @@
       color: white;
       padding: 20px;
       text-align: center;
+      position: relative;
     }
 
     h1 {
       margin: 0;
+    }
+
+    /* Hamburger Menu */
+    .menu-icon {
+      display: none;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      cursor: pointer;
+      font-size: 30px;
+      color: white;
     }
 
     .feature-btns {
@@ -71,30 +83,6 @@
       font-size: 16px;
     }
 
-    .admin-panel {
-      display: none;
-      background-color: #ffffff;
-      padding: 20px;
-      margin: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .admin-panel button {
-      background-color: #ff9800;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      margin: 10px 0;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .admin-panel button:hover {
-      background-color: #ff5722;
-    }
-
     /* Responsif untuk perangkat mobile */
     @media (max-width: 768px) {
       .feature-btn {
@@ -106,6 +94,21 @@
       .feature-btn i {
         font-size: 25px;
       }
+
+      /* Menyembunyikan tombol di desktop dan menampilkan menu hamburger di mobile */
+      .feature-btns {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+
+      .menu-open .feature-btns {
+        display: flex;
+      }
     }
   </style>
 </head>
@@ -115,12 +118,8 @@
   <header>
     <h1>GPDI SYALOM</h1>
     <p>JLN. PUTRI AYU KM 27, DESA MAMUGO, ROKAN HILIR</p>
+    <div class="menu-icon" id="menu-icon">&#9776;</div> <!-- Hamburger Icon -->
   </header>
-
-  <!-- Tombol Admin -->
-  <div class="admin-btn">
-    <button class="button admin-btn" id="admin-btn">Admin</button>
-  </div>
 
   <!-- Navigasi Tombol Fitur -->
   <div class="feature-btns">
@@ -156,5 +155,15 @@
   </div>
 
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+  <!-- JavaScript untuk membuka/menutup menu -->
+  <script>
+    const menuIcon = document.getElementById("menu-icon");
+    const body = document.body;
+
+    menuIcon.addEventListener("click", function() {
+      body.classList.toggle("menu-open");
+    });
+  </script>
 </body>
 </html>
