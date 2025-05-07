@@ -16,6 +16,7 @@
       color: white;
       text-align: center;
       padding: 1em;
+      position: relative;
     }
     header img {
       max-height: 80px;
@@ -48,6 +49,8 @@
       color: white;
       padding: 10px;
       border: none;
+      width: 100%;
+      text-align: left;
       cursor: pointer;
     }
     .content {
@@ -65,7 +68,11 @@
     .galeri { border-left: 5px solid #9b59b6; }
     .donasi { border-left: 5px solid #e67e22; }
     .section h2 { margin-top: 0; }
-
+    #galeri-gambar img {
+      width: 100px;
+      margin: 5px;
+      border-radius: 5px;
+    }
     @media (max-width: 600px) {
       .sidebar { width: 100%; }
       header h1 { font-size: 20px; }
@@ -127,6 +134,7 @@
     </div>
   </div>
 
+  <!-- Script -->
   <script>
     function toggleMenu() {
       document.getElementById('sidebar').classList.toggle('active');
@@ -159,8 +167,6 @@
           } else if (type === 'galeri') {
             const img = document.createElement('img');
             img.src = data.data.link;
-            img.style.width = '100px';
-            img.style.margin = '5px';
             document.getElementById('galeri-gambar').appendChild(img);
           }
         })
