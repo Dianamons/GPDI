@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/lucide.css">
   <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
   <style>
-    /* Global Styling */
     body {
       margin: 0;
       font-family: sans-serif;
@@ -15,26 +14,28 @@
       color: white;
     }
 
-    /* Header */
+    /* Header Styling */
     .header {
       display: flex;
-      justify-content: flex-end;
+      flex-direction: column;
       align-items: center;
       background-color: #1e3a8a;
       color: white;
-      padding: 10px;
-      position: relative;
+      padding: 20px;
     }
     .header .logo {
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      margin-left: 15px;
     }
     .header h1 {
       font-size: 24px;
-      margin-left: 15px;
-      font-weight: bold;
+      margin-top: 10px;
+    }
+    .header p {
+      font-size: 16px;
+      margin-top: 5px;
+      text-align: center;
     }
 
     /* Sidebar */
@@ -81,9 +82,6 @@
     .content {
       margin-left: 90px;
       padding: 15px;
-      background: #3b82f6;
-      border-radius: 10px;
-      margin-top: 20px;
     }
 
     /* Section */
@@ -116,10 +114,11 @@
 </head>
 <body>
 
-  <!-- Header with logo on the right and name below -->
+  <!-- Header with Logo, Name and Address -->
   <header class="header">
+    <img src="" alt="Logo Gereja" class="logo" id="logoGereja">
     <h1>Gereja GPDI Syalom Desa Mamugo</h1>
-    <img src="logo_gereja.png" alt="Logo Gereja" class="logo">
+    <p>Alamat: Jl. Contoh Gereja No.1, Desa Mamugo, Rokan Hilir</p>
   </header>
 
   <!-- Sidebar with buttons -->
@@ -155,6 +154,8 @@
 
     <div id="admin" class="section">
       <h3>Panel Admin</h3>
+      <h4>Upload Logo</h4>
+      <input type="file" id="logoInput" onchange="uploadLogo()">
       <h4>Tambah Pengumuman</h4>
       <input id="judulPengumuman" placeholder="Judul">
       <textarea id="isiPengumuman" placeholder="Isi..."></textarea>
@@ -190,12 +191,29 @@
   <script>
     lucide.createIcons();
 
+    // Show specific section
     function showSection(id) {
       document.querySelectorAll('.section').forEach(el => el.style.display = 'none');
       const target = document.getElementById(id);
       if (target) target.style.display = 'block';
     }
 
+    // Function to upload logo
+    function uploadLogo() {
+      const logoInput = document.getElementById('logoInput');
+      const logo = document.getElementById('logoGereja');
+      const file = logoInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        logo.src = e.target.result;
+      };
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Search for Bible verse
     async function searchVerse() {
       const ayat = document.getElementById('verseInput').value;
       const hasil = document.getElementById('hasilAyat');
@@ -213,6 +231,7 @@
       }
     }
 
+    // Add announcement
     function tambahPengumuman() {
       const judul = document.getElementById("judulPengumuman").value;
       const isi = document.getElementById("isiPengumuman").value;
@@ -223,20 +242,6 @@
         document.getElementById("judulPengumuman").value = "";
         document.getElementById("isiPengumuman").value = "";
         alert("Pengumuman ditambahkan.");
-      }
-    }
-
-    function tambahGaleri() {
-      const url = document.getElementById("urlGaleri").value;
-      if (url) {
-        const media = url.endsWith(".mp4") ? 
-          `<video src="${url}" controls width="100%"></video>` :
-          `<img src="${url}" width="100%">`;
-        const div = document.createElement("div");
-        div.innerHTML = media + "<hr>";
-        document.getElementById("listGaleri").appendChild(div);
-        document.getElementById("urlGaleri").value = "";
-        alert("Galeri ditambahkan.");
       }
     }
   </script>
