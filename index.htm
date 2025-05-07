@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website Gereja</title>
+  <title>Website Gereja GPDI Syalom Mamugo</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/lucide.css">
   <script src="https://cdn.jsdelivr.net/npm/lucide@latest"></script>
   <style>
+    /* Global Styling */
     body {
       margin: 0;
       font-family: sans-serif;
@@ -17,20 +18,23 @@
     /* Header */
     .header {
       display: flex;
-      flex-direction: column;
+      justify-content: flex-end;
       align-items: center;
       background-color: #1e3a8a;
       color: white;
       padding: 10px;
+      position: relative;
     }
-    .logo {
+    .header .logo {
       width: 60px;
       height: 60px;
       border-radius: 50%;
+      margin-left: 15px;
     }
-    h1 {
+    .header h1 {
       font-size: 24px;
-      margin-top: 10px;
+      margin-left: 15px;
+      font-weight: bold;
     }
 
     /* Sidebar */
@@ -40,13 +44,14 @@
       left: 0;
       height: 100%;
       width: 80px;
-      background: black;
+      background: #111;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-top: 20px;
       z-index: 999;
     }
+
     .sidebar-btn {
       background: #1e3a8a;
       border: none;
@@ -62,9 +67,11 @@
       text-align: center;
       cursor: pointer;
     }
+
     .sidebar-btn i {
       font-size: 24px;
     }
+
     .sidebar-btn span {
       font-size: 10px;
       margin-top: 5px;
@@ -74,12 +81,15 @@
     .content {
       margin-left: 90px;
       padding: 15px;
+      background: #3b82f6;
+      border-radius: 10px;
+      margin-top: 20px;
     }
 
     /* Section */
     .section {
       display: none;
-      background: #3b82f6;
+      background: #93c5fd;
       padding: 10px;
       border-radius: 10px;
       margin-bottom: 20px;
@@ -93,6 +103,7 @@
       border: none;
       margin-bottom: 10px;
     }
+
     button.submit {
       background: #1e3a8a;
       color: white;
@@ -105,9 +116,10 @@
 </head>
 <body>
 
+  <!-- Header with logo on the right and name below -->
   <header class="header">
-    <img src="logo.png" alt="Logo Gereja" class="logo">
-    <h1>GEREJA CONTOH ONLINE</h1>
+    <h1>Gereja GPDI Syalom Desa Mamugo</h1>
+    <img src="logo_gereja.png" alt="Logo Gereja" class="logo">
   </header>
 
   <!-- Sidebar with buttons -->
