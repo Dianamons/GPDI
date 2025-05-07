@@ -13,14 +13,27 @@
       background: black;
       color: white;
     }
-    header {
-      text-align: center;
-      padding: 20px;
-      background: #1e3a8a;
+
+    /* Header */
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #1e3a8a;
       color: white;
-      font-size: 20px;
-      font-weight: bold;
+      padding: 10px;
     }
+    .logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    h1 {
+      font-size: 24px;
+      margin-top: 10px;
+    }
+
+    /* Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
@@ -34,7 +47,7 @@
       padding-top: 20px;
       z-index: 999;
     }
-    .menu-btn {
+    .sidebar-btn {
       background: #1e3a8a;
       border: none;
       color: white;
@@ -45,15 +58,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      cursor: pointer;
     }
-    .menu-btn i {
-      width: 24px;
-      height: 24px;
+    .sidebar-btn i {
+      font-size: 24px;
     }
+    .sidebar-btn span {
+      font-size: 10px;
+      margin-top: 5px;
+    }
+
+    /* Content */
     .content {
       margin-left: 90px;
       padding: 15px;
     }
+
+    /* Section */
     .section {
       display: none;
       background: #3b82f6;
@@ -61,9 +84,8 @@
       border-radius: 10px;
       margin-bottom: 20px;
     }
-    .input-box {
-      margin-top: 10px;
-    }
+
+    /* Input & Button */
     input, textarea {
       width: 100%;
       padding: 8px;
@@ -82,25 +104,40 @@
   </style>
 </head>
 <body>
-  <header>
-    <div>Logo Gereja</div>
-    <div>GEREJA CONTOH ONLINE</div>
+
+  <header class="header">
+    <img src="logo.png" alt="Logo Gereja" class="logo">
+    <h1>GEREJA CONTOH ONLINE</h1>
   </header>
 
+  <!-- Sidebar with buttons -->
   <div class="sidebar">
-    <button onclick="showSection('alkitab')" class="menu-btn" title="Alkitab"><i data-lucide="book"></i></button>
-    <button onclick="showSection('admin')" class="menu-btn" title="Admin"><i data-lucide="settings"></i></button>
-    <button onclick="showSection('jadwal')" class="menu-btn" title="Jadwal"><i data-lucide="calendar-days"></i></button>
-    <button onclick="showSection('pengumuman')" class="menu-btn" title="Pengumuman"><i data-lucide="megaphone"></i></button>
-    <button onclick="showSection('galeri')" class="menu-btn" title="Galeri"><i data-lucide="image"></i></button>
-    <button onclick="showSection('kontak')" class="menu-btn" title="Kontak"><i data-lucide="map-pin"></i></button>
+    <button class="sidebar-btn" onclick="showSection('alkitab')">
+      <i data-lucide="book"></i><span>Alkitab</span>
+    </button>
+    <button class="sidebar-btn" onclick="showSection('admin')">
+      <i data-lucide="settings"></i><span>Admin</span>
+    </button>
+    <button class="sidebar-btn" onclick="showSection('jadwal')">
+      <i data-lucide="calendar-days"></i><span>Jadwal</span>
+    </button>
+    <button class="sidebar-btn" onclick="showSection('pengumuman')">
+      <i data-lucide="megaphone"></i><span>Pengumuman</span>
+    </button>
+    <button class="sidebar-btn" onclick="showSection('galeri')">
+      <i data-lucide="image"></i><span>Galeri</span>
+    </button>
+    <button class="sidebar-btn" onclick="showSection('kontak')">
+      <i data-lucide="map-pin"></i><span>Kontak</span>
+    </button>
   </div>
 
+  <!-- Main Content -->
   <div class="content">
     <div id="alkitab" class="section">
-      <h3>Alkitab</h3>
-      <input id="cariAyat" placeholder="Contoh: Yohanes 3:16">
-      <button class="submit" onclick="cariAlkitab()">Cari</button>
+      <h3>Alkitab Online</h3>
+      <input id="verseInput" type="text" placeholder="Contoh: John 3:16">
+      <button class="submit" onclick="searchVerse()">Cari</button>
       <div id="hasilAyat"></div>
     </div>
 
@@ -110,10 +147,6 @@
       <input id="judulPengumuman" placeholder="Judul">
       <textarea id="isiPengumuman" placeholder="Isi..."></textarea>
       <button class="submit" onclick="tambahPengumuman()">Simpan</button>
-
-      <h4>Tambah Foto / Video Galeri</h4>
-      <input id="urlGaleri" placeholder="URL Gambar/Video dari Imgur">
-      <button class="submit" onclick="tambahGaleri()">Simpan</button>
     </div>
 
     <div id="jadwal" class="section">
@@ -151,6 +184,23 @@
       if (target) target.style.display = 'block';
     }
 
+    async function searchVerse() {
+      const ayat = document.getElementById('verseInput').value;
+      const hasil = document.getElementById('hasilAyat');
+      hasil.innerHTML = "Memuat...";
+      try {
+        const res = await fetch(`https://bible-api.com/${encodeURIComponent(ayat)}`);
+        const data = await res.json();
+        if (data.text) {
+          hasil.innerHTML = `<div style="background:#93c5fd;padding:10px;border-radius:10px;">${data.text} <br><small>${data.reference}</small></div>`;
+        } else {
+          hasil.innerHTML = "Ayat tidak ditemukan.";
+        }
+      } catch (e) {
+        hasil.innerHTML = "Gagal mengambil data.";
+      }
+    }
+
     function tambahPengumuman() {
       const judul = document.getElementById("judulPengumuman").value;
       const isi = document.getElementById("isiPengumuman").value;
@@ -175,23 +225,6 @@
         document.getElementById("listGaleri").appendChild(div);
         document.getElementById("urlGaleri").value = "";
         alert("Galeri ditambahkan.");
-      }
-    }
-
-    async function cariAlkitab() {
-      const ayat = document.getElementById("cariAyat").value;
-      const hasil = document.getElementById("hasilAyat");
-      hasil.innerHTML = "Memuat...";
-      try {
-        const res = await fetch(`https://bible-api.com/${encodeURIComponent(ayat)}`);
-        const data = await res.json();
-        if (data.text) {
-          hasil.innerHTML = `<div style="background:#93c5fd;padding:10px;border-radius:10px;">${data.text} <br><small>${data.reference}</small></div>`;
-        } else {
-          hasil.innerHTML = "Ayat tidak ditemukan.";
-        }
-      } catch (e) {
-        hasil.innerHTML = "Gagal mengambil data.";
       }
     }
   </script>
