@@ -1,169 +1,172 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GPDI SYALOM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #f4f6f8;
-      color: #333;
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f7f7f7;
     }
-
     header {
-      background-color: #0073e6;
+      background: #006400;
+      color: white;
+      text-align: center;
+      padding: 1em;
+    }
+    header img {
+      max-height: 80px;
+      margin-bottom: 10px;
+    }
+    .menu-toggle {
+      position: absolute;
+      top: 10px; left: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      color: white;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0; left: -250px;
+      width: 250px;
+      height: 100%;
+      background: #222;
       color: white;
       padding: 20px;
-      text-align: center;
-      position: relative;
+      transition: 0.3s;
+      z-index: 1000;
     }
-
-    h1 {
-      margin: 0;
-    }
-
-    /* Hamburger Menu */
-    .menu-icon {
-      display: none;
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      cursor: pointer;
-      font-size: 30px;
+    .sidebar.active { left: 0; }
+    .sidebar h3 { margin-top: 0; }
+    .sidebar .button {
+      display: block;
+      margin: 10px 0;
+      background: #006400;
       color: white;
-    }
-
-    .feature-btns {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 20px;
-    }
-
-    .feature-btn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px;
-      border-radius: 10px;
-      text-align: center;
-      width: 150px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      flex: 1 1 calc(33% - 20px);
-    }
-
-    .feature-btn i {
-      font-size: 30px;
-    }
-
-    .feature-btn p {
-      margin-top: 10px;
-    }
-
-    .feature-btn:hover {
-      transform: translateY(-5px);
-    }
-
-    .admin-btn {
-      text-align: right;
-      margin: 20px;
-    }
-
-    .admin-btn .button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
+      padding: 10px;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
     }
+    .content {
+      margin: 20px;
+    }
+    .section {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .pengumuman { border-left: 5px solid #3498db; }
+    .jadwal { border-left: 5px solid #2ecc71; }
+    .galeri { border-left: 5px solid #9b59b6; }
+    .donasi { border-left: 5px solid #e67e22; }
+    .section h2 { margin-top: 0; }
 
-    /* Responsif untuk perangkat mobile */
-    @media (max-width: 768px) {
-      .feature-btn {
-        width: 100%;
-        font-size: 14px;
-        padding: 10px;
-      }
-
-      .feature-btn i {
-        font-size: 25px;
-      }
-
-      /* Menyembunyikan tombol di desktop dan menampilkan menu hamburger di mobile */
-      .feature-btns {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .menu-icon {
-        display: block;
-      }
-
-      .menu-open .feature-btns {
-        display: flex;
-      }
+    @media (max-width: 600px) {
+      .sidebar { width: 100%; }
+      header h1 { font-size: 20px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h3>Menu</h3>
+    <button class="button" onclick="alert('Fitur Alkitab belum tersedia')"><i class="fas fa-book"></i> Alkitab</button>
+    <button class="button" onclick="toggleAdminPanel()"><i class="fas fa-user-cog"></i> Admin</button>
+  </div>
+
   <!-- Header -->
   <header>
+    <i class="fas fa-bars menu-toggle" onclick="toggleMenu()"></i>
+    <img src="https://i.imgur.com/placeholder.png" alt="Logo Gereja" id="logo-gereja"/>
     <h1>GPDI SYALOM</h1>
     <p>JLN. PUTRI AYU KM 27, DESA MAMUGO, ROKAN HILIR</p>
-    <div class="menu-icon" id="menu-icon">&#9776;</div> <!-- Hamburger Icon -->
   </header>
 
-  <!-- Navigasi Tombol Fitur -->
-  <div class="feature-btns">
-    <div class="feature-btn alkitab">
-      <i class="fas fa-book"></i>
-      <p>Alkitab</p>
+  <!-- Konten utama -->
+  <div class="content">
+    <div class="section pengumuman">
+      <h2>Pengumuman</h2>
+      <p>Selamat datang di website resmi GPDI SYALOM. Tuhan Yesus memberkati!</p>
     </div>
-    <div class="feature-btn jadwal">
-      <i class="fas fa-calendar-alt"></i>
-      <p>Jadwal Ibadah</p>
+    <div class="section jadwal">
+      <h2>Jadwal Ibadah</h2>
+      <ul>
+        <li>Minggu, 09:00 WIB - Ibadah Raya</li>
+        <li>Rabu, 18:00 WIB - Ibadah Doa</li>
+      </ul>
     </div>
-    <div class="feature-btn galeri">
-      <i class="fas fa-images"></i>
-      <p>Galeri Kegiatan</p>
+    <div class="section galeri">
+      <h2>Galeri Kegiatan</h2>
+      <div id="galeri-gambar"></div>
     </div>
-    <div class="feature-btn pengumuman">
-      <i class="fas fa-bullhorn"></i>
-      <p>Pengumuman</p>
-    </div>
-    <div class="feature-btn donasi">
-      <i class="fas fa-donate"></i>
-      <p>Donasi</p>
+    <div class="section donasi">
+      <h2>Donasi</h2>
+      <p>Silakan transfer ke rekening BCA 123456789 a/n GPDI SYALOM atau hubungi pengurus gereja.</p>
     </div>
   </div>
 
-  <!-- Panel Admin (hidden) -->
-  <div class="admin-panel" id="admin-panel">
-    <h2>Admin Panel</h2>
-    <button class="button">Tambah/Edit Jadwal Ibadah</button>
-    <button class="button">Tambah/Edit Galeri Kegiatan</button>
-    <button class="button">Tambah/Edit Pengumuman</button>
-    <button class="button">Tambah/Edit Donasi</button>
+  <!-- Admin Panel -->
+  <div class="content" id="admin-panel" style="display: none;">
+    <div class="section">
+      <h2>Admin Panel</h2>
+      <label>Upload Logo Gereja:
+        <input type="file" onchange="uploadImage(event, 'logo')" />
+      </label><br><br>
+      <label>Upload Galeri Kegiatan:
+        <input type="file" multiple onchange="uploadImage(event, 'galeri')" />
+      </label><br><br>
+      <textarea placeholder="Edit Pengumuman" rows="4" style="width: 100%;"></textarea><br><br>
+      <textarea placeholder="Edit Jadwal Ibadah" rows="4" style="width: 100%;"></textarea>
+    </div>
   </div>
 
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
-  <!-- JavaScript untuk membuka/menutup menu -->
   <script>
-    const menuIcon = document.getElementById("menu-icon");
-    const body = document.body;
+    function toggleMenu() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
 
-    menuIcon.addEventListener("click", function() {
-      body.classList.toggle("menu-open");
-    });
+    function toggleAdminPanel() {
+      const panel = document.getElementById('admin-panel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function uploadImage(event, type) {
+      const files = event.target.files;
+      const clientId = 'f15b5e7a0f3592b';
+
+      for (let file of files) {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        fetch('https://api.imgur.com/3/image', {
+          method: 'POST',
+          headers: {
+            Authorization: 'Client-ID ' + clientId
+          },
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (type === 'logo') {
+            document.getElementById('logo-gereja').src = data.data.link;
+          } else if (type === 'galeri') {
+            const img = document.createElement('img');
+            img.src = data.data.link;
+            img.style.width = '100px';
+            img.style.margin = '5px';
+            document.getElementById('galeri-gambar').appendChild(img);
+          }
+        })
+        .catch(err => console.error(err));
+      }
+    }
   </script>
 </body>
 </html>
